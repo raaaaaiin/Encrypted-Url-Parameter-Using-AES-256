@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<title>Feast of the Immaculate Conception</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		</head>
+		<body>
+			<div id="bgimg" style="background-image: url()" class="bgImg">
+				<button onclick="closeFIC()">X</button>
+			</div>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+			<script>
+var dect
+var rawdata
+var params;
+decrypt();
+//Dont mind the encryption and decytpion maam i just made this 
+//because im not comfortable seeing variable getting passed in ascii form at url 
+//i use hash encryption Sakuranbo as a key and dontpwnme4 as salt
+function decrypt(){
+	var output = document.location.href.split(/[? ]+/).pop();
+	dect = CryptoJS.AES.decrypt(output,"dontpwnme4", "Sakuranbo")
+	rawdata = dect.toString(CryptoJS.enc.Utf8)
+	params = getParams();
+	init();
+}
+
+ function closeFIC(){
+ window.close();
+}
+//dom that run upon initialization it changes background and title variable came from decrypted url
+function init(){
+	document.getElementById("bgimg").style.backgroundImage = "url("+ unescape (params['varimg'])+".png)"
+	document.title = unescape (params['title'])
+}
+//it reads the variable from url
+function getParams() {
+	var idx = rawdata.indexOf('?');
+	var params = new Array();
+		if (idx != -1) {
+			var pairs = rawdata.substring(idx+1, rawdata.length).split('&');
+				for (var i=0; i
+				<pairs.length; i++) {
+					nameVal = pairs[i].split('=');
+					params[nameVal[0]] = nameVal[1];
+				}
+		}
+	return params;
+}
+ 
+		</script>
+	</body>
+</html>
